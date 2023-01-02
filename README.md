@@ -1,6 +1,6 @@
 # movies_flutter
 
-Project movies with moviesDB flutter
+A new Flutter project.
 
 ## Getting Started
 
