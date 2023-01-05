@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'home.dart';
+import 'package:movies_flutter/router/mobile_router.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,7 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: const HomeScreen(),
+      routes: MobileRouter.routes,
+      initialRoute: MobileRouter.initialRoute,
     );
   }
 }
