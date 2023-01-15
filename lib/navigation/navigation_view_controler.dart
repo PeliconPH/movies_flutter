@@ -19,7 +19,11 @@ class _NavigationViewControlerState extends State<NavigationViewControler> {
     setState(() {
       int selectedIndex = index;
     });
-    pageController.animateToPage(index, duration: const Duration(milliseconds: 1000), curve: Curves.bounceOut);
+    pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.bounceOut,
+    );
   }
 
   @override

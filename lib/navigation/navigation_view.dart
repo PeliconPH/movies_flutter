@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_flutter/home/home_view_controler.dart';
+import 'package:movies_flutter/home/di/home_factory.dart';
 import 'package:movies_flutter/search/search_view_controler.dart';
 
 abstract class NavigationViewModelProtocol with ChangeNotifier {
@@ -8,8 +8,9 @@ abstract class NavigationViewModelProtocol with ChangeNotifier {
 }
 
 class NavigationView extends StatelessWidget {
+  final StatefulWidget _home = HomeFactory.home();
   final NavigationViewModelProtocol viewModel;
-  const NavigationView({super.key, required this.viewModel});
+  NavigationView({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class NavigationView extends StatelessWidget {
             body: IndexedStack(
               index: viewModel.index,
               children: [
-                const HomeViewControler(),
+                _home,
                 const SearchViewControler(),
                 Container(
                   color: Colors.green,
