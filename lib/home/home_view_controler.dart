@@ -44,7 +44,10 @@ class _HomeViewControlerState extends State<HomeViewControler> {
                           itemBuilder: ((_, index) {
                             return Padding(
                               padding: const EdgeInsets.all(16),
-                              child: SizedBox(height: 200, child: Image.network(widget.viewModel.movies[index].image)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(widget.viewModel.movies[index].image),
+                              ),
                             );
                           }),
                         ),
@@ -56,8 +59,8 @@ class _HomeViewControlerState extends State<HomeViewControler> {
                           itemBuilder: ((_, index) {
                             return Padding(
                               padding: const EdgeInsets.all(16),
-                              child: SizedBox(
-                                height: 200,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
                                 child: Image.network(widget.viewModel.topMovies[index].image),
                               ),
                             );
