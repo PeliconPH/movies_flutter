@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-
-import '../model/movie.dart';
+import 'package:movies_flutter/suporte/componentes/movie_item/movie_item.dart';
 
 abstract class HomeProtocol extends ChangeNotifier {
   void getPopularMovies();
   void getTopMovies();
-  List<Movie> get movies;
-  List<Movie> get topMovies;
+  void getUpMovies();
+  List<MovieItemViewModelProtocol> get movies;
+  List<MovieItemViewModelProtocol> get topMovies;
+  List<MovieItemViewModelProtocol> get upMovies;
 }
 
 class HomeViewControler extends StatefulWidget {
@@ -23,177 +24,84 @@ class _HomeViewControlerState extends State<HomeViewControler> {
     super.initState();
     widget.viewModel.getPopularMovies();
     widget.viewModel.getTopMovies();
+    widget.viewModel.getUpMovies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: AnimatedBuilder(
           animation: widget.viewModel,
           builder: (context, _) {
-            return LayoutBuilder(builder: (context, size) {
-              return SingleChildScrollView(
-                child: SizedBox(
-                  height: size.maxHeight,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: widget.viewModel.movies.length,
-                          itemBuilder: ((_, index) {
-                            final rate = widget.viewModel.movies[index].voteAverage;
-                            final titleMovies = widget.viewModel.movies[index].title;
-                            return Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
-                                    child: Image.network(widget.viewModel.movies[index].image),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Positioned(
-                                        bottom: 16,
-                                        left: 16,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(12),
-                                          child: Stack(
-                                            alignment: AlignmentDirectional.center,
-                                            children: [
-                                              Container(
-                                                color: Colors.green,
-                                                width: 100,
-                                                height: 40,
-                                              ),
-                                              Text(
-                                                'IMDB $rate',
-                                                textAlign: TextAlign.justify,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(fontWeight: FontWeight.bold),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        bottom: 16,
-                                        left: 16,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(12),
-                                          child: Stack(
-                                            alignment: AlignmentDirectional.center,
-                                            children: [
-                                              Container(
-                                                color: Colors.black,
-                                                width: 185,
-                                                height: 60,
-                                              ),
-                                              SizedBox(
-                                                width: 185,
-                                                child: Text(
-                                                  titleMovies,
-                                                  textAlign: TextAlign.justify,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: const TextStyle(fontWeight: FontWeight.bold),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          }),
+            return SingleChildScrollView(
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //Filmes Populares
+                    const Padding(
+                      padding: EdgeInsets.only(
+                        left: 16,
+                        top: 16,
+                        bottom: 16,
+                      ),
+                      child: Text(
+                        'Filmes Populares',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
                         ),
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: widget.viewModel.topMovies.length,
-                          itemBuilder: ((_, index) {
-                            final rateTop = widget.viewModel.topMovies[index].voteAverage;
-                            final titleTopMovies = widget.viewModel.topMovies[index].title;
-                            return Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
-                                    child: Image.network(widget.viewModel.topMovies[index].image),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Positioned(
-                                        bottom: 16,
-                                        left: 16,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(12),
-                                          child: Stack(
-                                            alignment: AlignmentDirectional.center,
-                                            children: [
-                                              Container(
-                                                color: Colors.green,
-                                                width: 100,
-                                                height: 40,
-                                              ),
-                                              Text(
-                                                'IMDB $rateTop',
-                                                textAlign: TextAlign.justify,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(fontWeight: FontWeight.bold),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        bottom: 16,
-                                        left: 16,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(12),
-                                          child: Stack(
-                                            alignment: AlignmentDirectional.center,
-                                            children: [
-                                              Container(
-                                                color: Colors.black,
-                                                width: 185,
-                                                height: 60,
-                                              ),
-                                              SizedBox(
-                                                width: 185,
-                                                child: Text(
-                                                  titleTopMovies,
-                                                  textAlign: TextAlign.justify,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: const TextStyle(fontWeight: FontWeight.bold),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          }),
+                    ),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 280),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.viewModel.movies.length,
+                        itemBuilder: ((_, index) {
+                          return ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 200),
+                            child: MovieItemView(
+                              viewModel: widget.viewModel.movies[index],
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                    //Filmes Aclamados pelas Criticas
+                    const Padding(
+                      padding: EdgeInsets.only(
+                        left: 16,
+                        top: 16,
+                        bottom: 16,
+                      ),
+                      child: Text(
+                        'Filmes Aclamados pelas Criticas',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 280),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.viewModel.topMovies.length,
+                        itemBuilder: ((_, index) {
+                          return ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 200),
+                              child: MovieItemView(viewModel: widget.viewModel.topMovies[index]));
+                        }),
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            });
+              ),
+            );
           }),
     );
   }

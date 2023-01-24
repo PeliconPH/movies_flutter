@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:movies_flutter/api/movies_routes.dart';
 import 'package:movies_flutter/home/use_case/get_popular_movies.dart';
 import 'package:movies_flutter/home/use_case/get_top_movies.dart';
+import 'package:movies_flutter/home/use_case/get_up_movies.dart';
 
 import '../home_view_controler.dart';
 import '../home_view_model.dart';
@@ -12,7 +13,12 @@ class HomeFactory {
     final routes = MovieRoutes();
     final useCase = GetPopularMoviesUseCase(routes: routes);
     final useTopCase = GetTopMoviesUseCase(routes: routes);
-    final viewModel = HomeViewModel(useCaseProtocol: useCase, useTopCaseProtocol: useTopCase);
+    final useUpCase = GetUpMoviesUseCase(routes: routes);
+    final viewModel = HomeViewModel(
+      useCaseProtocol: useCase,
+      useTopCaseProtocol: useTopCase,
+      useUpCaseProtocol: useUpCase,
+    );
 
     return HomeViewControler(viewModel: viewModel);
   }
